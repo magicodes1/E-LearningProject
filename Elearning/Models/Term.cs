@@ -1,0 +1,22 @@
+using System.Collections;
+using System.ComponentModel.DataAnnotations;
+
+namespace ElearningApplication.Models;
+
+public class Term
+{
+    [Key]
+    [Required]
+    public Guid TermId { get; set; }
+    [Required]
+    [StringLength(10)]
+    public string TermName { get; set; } = string.Empty;
+    [Required]
+    public int TermYear { get; set; }
+
+    public Guid CourseId { get; set; }
+    public Course Course { get; set; } = new Course();
+
+
+    public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+}
