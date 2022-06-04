@@ -23,5 +23,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<SubjectOriginClass> SubjectOriginClasses { get; set; } = null!;
     public DbSet<Student> Students { get; set; } = null!;
 
+    public DbSet<StudentClassDay> StudentClassDays { get; set; } = null!;
+
     
 }
