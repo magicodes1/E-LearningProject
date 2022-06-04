@@ -24,6 +24,10 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Student> Students { get; set; } = null!;
 
     public DbSet<StudentClassDay> StudentClassDays { get; set; } = null!;
+    public DbSet<Teacher> Teachers { get; set; } = null!;
+    public DbSet<Message> Messages { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } = null!;
+    public DbSet<Answer> Answers { get; set; } = null!;
 
 
 
@@ -72,12 +76,23 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(soc=>soc.OnlineClass)
                 .WithOne(oc=>oc.SubjectOriginClass)
                 .HasForeignKey<OnlineClass>(oc=>oc.SubjectOriginClassId);
+        // techer 1 --------------------> n SubjectOriginClass
+        builder.Entity<SubjectOriginClass>()
+                .HasOne(soc=>soc.Teacher)
+                .WithMany(t=>t.SubjectOriginClasses)
+                .HasForeignKey(fk=>fk.TeacherId);
        //
         builder.Entity<OnlineClass>()
                 .HasOne(oc=>oc.originClass)
                 .WithMany(originClass=>originClass.onlineClasses)
                 .HasForeignKey(oc=>oc.OriginClassId);
-        
+
+        // techer 1 -----------------> n onlineClass
+        builder.Entity<OnlineClass>()
+                .HasOne(oc=>oc.Teacher)
+                .WithMany(t=>t.OnlineClasses)
+                .HasForeignKey(fk=>fk.TeacherId);
+
         // OnlineClass 1 --------------------> n ClassDay
         builder.Entity<ClassDay>()
                 .HasOne(cd=>cd.onlineClass)
@@ -117,6 +132,61 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .WithOne(u=>u.Student)
                 .HasForeignKey<ApplicationUser>(fk=>fk.StudentId);
 
+        // teacher 1------------------------>1 account
+
+        builder.Entity<Teacher>()
+                .HasOne(t=>t.ApplicationUser)
+                .WithOne(u=>u.Teacher)
+                .HasForeignKey<ApplicationUser>(fk=>fk.TeacherId);
+
+
+        // onlineClass 1-----------------------> n Message
+        builder.Entity<Message>()
+                .HasOne(m=>m.OnlineClass)
+                .WithMany(oc=>oc.Messages)
+                .HasForeignKey(fk=>fk.OnlineClassId);
+
+        // student 1 -----------------------> n message
+        builder.Entity<Message>()
+                .HasOne(m=>m.Student)
+                .WithMany(s=>s.Messages)
+                .HasForeignKey(fk=>fk.StudentId);
+
+        // techer 1 ----------------------> n message
+
+        builder.Entity<Message>()
+                .HasOne(m=>m.Teacher)
+                .WithMany(t=>t.Messages)
+                .HasForeignKey(fk=>fk.TeacherId);
+
+
+        // onlineClass 1----------------------> n Question
+         builder.Entity<Question>()
+                .HasOne(q=>q.OnlineClass)
+                .WithMany(oc=>oc.Questions)
+                .HasForeignKey(fk=>fk.OnlineClassId);
         
+        // student 1 ----------------> n question
+
+        builder.Entity<Question>()
+                .HasOne(q=>q.Student)
+                .WithMany(s=>s.Questions)
+                .HasForeignKey(fk=>fk.StudentId);
+
+        // Question 1 ---------------------> n Answer
+         builder.Entity<Answer>()
+                .HasOne(a=>a.Question)
+                .WithMany(oc=>oc.Answers)
+                .HasForeignKey(fk=>fk.QuestionId);
+        // 1 techer -------------------> n answer
+        builder.Entity<Answer>()
+                .HasOne(a=>a.Teacher)
+                .WithMany(t=>t.Answers)
+                .HasForeignKey(fk=>fk.TeacherId);
+        // student 1 ----------------> n answer
+        builder.Entity<Answer>()
+                .HasOne(a=>a.Student)
+                .WithMany(s=>s.Answers)
+                .HasForeignKey(fk=>fk.StudentId);
     }
 }

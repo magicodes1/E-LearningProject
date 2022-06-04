@@ -40,5 +40,13 @@ public class OnlineClass
     public SubjectOriginClass SubjectOriginClass { get; set; } = new SubjectOriginClass();
 
 
+    public Guid TeacherId { get; set; }
+
+    public Teacher Teacher { get; set; } = new Teacher();
+
+
     public ICollection<ClassDay> ClassDays { get; set; } = new List<ClassDay>();
+    
+    public ICollection<Question> Questions { get; set; } = new List<Question>();
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
 }

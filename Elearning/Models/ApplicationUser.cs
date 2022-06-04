@@ -10,4 +10,7 @@ public class ApplicationUser : IdentityUser
 
     public Guid StudentId { get; set; }
     public Student Student { get; set; } = new Student();
+
+    public Guid TeacherId { get; set; }
+    public Teacher Teacher { get; set; } = new Teacher();
 }

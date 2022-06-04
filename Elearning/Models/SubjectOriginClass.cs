@@ -17,5 +17,9 @@ public class SubjectOriginClass
     public Guid SubjectId { get; set; }
     public Subject Subject { get; set; } = new Subject();
 
-    public OnlineClass OnlineClass { get; set; }= new OnlineClass();
+    public OnlineClass OnlineClass { get; set; } = new OnlineClass();
+
+    public Guid TeacherId { get; set; }
+
+    public Teacher Teacher { get; set; } = new Teacher();
 }

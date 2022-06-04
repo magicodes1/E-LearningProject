@@ -32,4 +32,12 @@ public class Student
     public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
 
      public ICollection<StudentClassDay> StudentClassDays { get; set; } = new List<StudentClassDay>();
+
+     
+     public ICollection<Message> Messages { get; set; } = new List<Message>();
+     public ICollection<Question> Questions { get; set; } = new List<Question>();
+     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    
+
+
 }
