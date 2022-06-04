@@ -1,13 +1,10 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace ElearningApplication.Models;
 
 public class ApplicationUser : IdentityUser
 {
-    
-    public Guid GradeId { get; set; }
-    public Grade Grade { get; set; } = new Grade();
-
-    public Guid CourseId { get; set; }
-    public Course Course { get; set; } = new Course();
+    [StringLength(150)]
+    public string Avatar { get; set; } = string.Empty;
 }

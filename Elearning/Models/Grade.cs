@@ -16,6 +16,6 @@ public class Grade
 
 
 
-    public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
+    public ICollection<Student> Students { get; set; } = new List<Student>();
 
 }
