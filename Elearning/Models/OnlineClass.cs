@@ -8,7 +8,6 @@ public class OnlineClass
     [Required]
     public Guid OnlineClassId { get; set; }
     [StringLength(30)]
-    [Required]
 
     public string OnlineClassTitle { get; set; } = string.Empty;
     [Required]
@@ -35,6 +34,9 @@ public class OnlineClass
     public Guid OriginClassId { get; set; }
     public OriginClass originClass { get; set; } = new OriginClass();
 
+    public Guid SubjectOriginClassId { get; set; }
+    public SubjectOriginClass SubjectOriginClass { get; set; } = new SubjectOriginClass();
 
-    public ICollection<SubjectSchedule> Schedules { get; set; } = new List<SubjectSchedule>();
+
+    public ICollection<ClassDay> ClassDays { get; set; } = new List<ClassDay>();
 }

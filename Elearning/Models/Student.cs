@@ -26,4 +26,8 @@ public class Student
     public Guid OriginClassId { get; set; }
 
     public OriginClass originClass { get; set; } = new OriginClass();
+
+
+
+    public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
 }

@@ -15,5 +15,5 @@ public class Subject
     public Guid TermId { get; set; }
     public Term Term {get;set;} = new Term();
     
-    public ICollection<SubjectSchedule> Schedules { get; set; } = new List<SubjectSchedule>();
+    public ICollection<SubjectOriginClass> subjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
 }

@@ -21,4 +21,7 @@ public class OriginClass
 
     public ICollection<OnlineClass> onlineClasses { get; set; } = new List<OnlineClass>();
     public ICollection<Student> Students { get; set; } = new List<Student>();
+
+
+    public ICollection<SubjectOriginClass> SubjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
 }
