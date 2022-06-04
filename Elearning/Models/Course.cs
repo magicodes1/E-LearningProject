@@ -20,5 +20,8 @@ public class Course
 
 
     public ICollection<Student> Students { get; set; } = new List<Student>();
+    public ICollection<Term> Terms { get; set; } = new List<Term>();
+
+
     
 }

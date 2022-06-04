@@ -30,4 +30,6 @@ public class Student
 
 
     public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
+
+     public ICollection<StudentClassDay> StudentClassDays { get; set; } = new List<StudentClassDay>();
 }

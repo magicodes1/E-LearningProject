@@ -22,6 +22,8 @@ public class OnlineClass
     public DateTime StudyTime { get; set; }
     [StringLength(100)]
     public string ClassLink { get; set; } = string.Empty;
+    [StringLength(100)]
+    public string PasswordClass { get; set; } = string.Empty;
 
 
 
