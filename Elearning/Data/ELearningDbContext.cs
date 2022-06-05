@@ -82,10 +82,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .WithMany(t=>t.SubjectOriginClasses)
                 .HasForeignKey(fk=>fk.TeacherId);
        //
-        builder.Entity<OnlineClass>()
-                .HasOne(oc=>oc.originClass)
-                .WithMany(originClass=>originClass.onlineClasses)
-                .HasForeignKey(oc=>oc.OriginClassId);
+        
 
         // techer 1 -----------------> n onlineClass
         builder.Entity<OnlineClass>()

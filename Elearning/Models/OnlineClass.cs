@@ -33,9 +33,6 @@ public class OnlineClass
 
 
 
-    public Guid OriginClassId { get; set; }
-    public OriginClass originClass { get; set; } = new OriginClass();
-
     public Guid SubjectOriginClassId { get; set; }
     public SubjectOriginClass SubjectOriginClass { get; set; } = new SubjectOriginClass();
 
