@@ -38,5 +38,5 @@ public class ExamDetail
 
 
     public ICollection<ExamDetailOriginClass> examDetailOriginClasses { get; set; } = new List<ExamDetailOriginClass>();
-
+    public ICollection<ExamStudent> ExamStudents { get; set; } = new List<ExamStudent>();
 }

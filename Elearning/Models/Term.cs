@@ -18,5 +18,5 @@ public class Term
     public Course Course { get; set; } = new Course();
 
 
-    public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
+    public ICollection<TermSubject> TermSubjects { get; set; } = new List<TermSubject>();
 }

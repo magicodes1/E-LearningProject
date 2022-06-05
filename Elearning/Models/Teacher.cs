@@ -8,6 +8,15 @@ public class Teacher
     [Required]
     public Guid TeacherId { get; set; }
 
+    [StringLength(30)]
+    [Required]
+    public string FullName { get; set; } = string.Empty;
+    [Required]
+    public bool Gender { get; set; }
+    [Required]
+    [DataType(DataType.Date)]
+    public DateTime Birthday { get; set; }
+
 
 
     public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
@@ -21,5 +30,8 @@ public class Teacher
 
     public OriginClass OriginClass { get; set; } = new OriginClass();
 
-    
+    public ICollection<ExamStudent> ExamStudents { get; set; } = new List<ExamStudent>();
+
+
+    public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
 }

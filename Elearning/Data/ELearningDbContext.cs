@@ -36,6 +36,9 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<ExamType> ExamTypes { get; set; } = null!;
     public DbSet<ExamDetailOriginClass> ExamDetailOriginClasses { get; set; } = null!;
 
+    public DbSet<ExamStudent> ExamStudents { get; set; } = null!;
+    public DbSet<TermSubject> TermSubjects { get; set; } = null!;
+
 
 
 
@@ -51,11 +54,17 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(t=>t.Course)
                 .WithMany(c=>c.Terms)
                 .HasForeignKey(fk=>fk.CourseId);
-        //Term 1 ----------------> n Subject.
-        builder.Entity<Subject>()
-                .HasOne(s=>s.Term)
-                .WithMany(t=>t.Subjects)
+                
+        //Term n ----------------> n Subject.
+        builder.Entity<TermSubject>()
+                .HasOne(ts=>ts.Term)
+                .WithMany(t=>t.TermSubjects)
                 .HasForeignKey(fk=>fk.TermId);
+        
+         builder.Entity<TermSubject>()
+                .HasOne(ts=>ts.Subject)
+                .WithMany(s=>s.TermSubjects)
+                .HasForeignKey(fk=>fk.SubjectId);
 
 
 
@@ -228,6 +237,25 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .WithMany(oc=>oc.examDetailOriginClasses)
                 .HasForeignKey(fk=>fk.OriginClassId);
 
-                
+        // ExamDetail n-------------->n student
+        builder.Entity<ExamStudent>()
+                .HasOne(es=>es.ExamDetail)
+                .WithMany(ed=>ed.ExamStudents)
+                .HasForeignKey(fk=>fk.ExamDetailId);
+
+        builder.Entity<ExamStudent>()
+                .HasOne(es=>es.Student)
+                .WithMany(s=>s.ExamStudents)
+                .HasForeignKey(fk=>fk.StudentId);
+        // teacher 1 ---------------------> n ExamStudent
+        builder.Entity<ExamStudent>()
+                .HasOne(es=>es.Teacher)
+                .WithMany(t=>t.ExamStudents)
+                .HasForeignKey(fk=>fk.TeacherId);
+        // teacher 1 ----------------> n subject
+        builder.Entity<Subject>()
+                .HasOne(s=>s.Teacher)
+                .WithMany(t=>t.Subjects)
+                .HasForeignKey(fk=>fk.TeacherId);
     }
 }

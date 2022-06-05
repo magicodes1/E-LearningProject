@@ -12,9 +12,13 @@ public class Subject
     public string SubjectName { get; set; } = string.Empty;
 
 
-    public Guid TermId { get; set; }
-    public Term Term {get;set;} = new Term();
     
     public ICollection<SubjectOriginClass> subjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
     public ICollection<ExamDetail> ExamDetails { get; set; } = new List<ExamDetail>();
+
+    public ICollection<TermSubject> TermSubjects { get; set; } = new List<TermSubject>();
+
+
+     public Guid TeacherId { get; set; }
+     public Teacher Teacher { get; set; } = new Teacher();
 }
