@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElearningApplication.Models;
-
+// Dùng để lưu lại học sinh nào làm bài kiểm tra nào và điểm bài kiểm tra bao nhiêu, giáo viên nào chấm
 public class ExamStudent
 {
     public Guid ExamDetailId { get; set; }
