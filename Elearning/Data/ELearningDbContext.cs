@@ -31,6 +31,13 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
 
 
 
+    public DbSet<Exam> Exams { get; set; } = null!;
+    public DbSet<ExamDetail> ExamDetails { get; set; } = null!;
+    public DbSet<ExamType> ExamTypes { get; set; } = null!;
+    public DbSet<ExamDetailOriginClass> ExamDetailOriginClasses { get; set; } = null!;
+
+
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -191,5 +198,36 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(oc=>oc.Teacher)
                 .WithOne(t=>t.OriginClass)
                 .HasForeignKey<OriginClass>(fk=>fk.TeacherId);
+
+        // subject n --------------------> n exam
+
+        builder.Entity<ExamDetail>()
+                .HasOne(ed=>ed.Subject)
+                .WithMany(s=>s.ExamDetails)
+                .HasForeignKey(fk=>fk.SubjectId);
+
+        builder.Entity<ExamDetail>()
+                .HasOne(ed=>ed.Exam)
+                .WithMany(e=>e.ExamDetails)
+                .HasForeignKey(fk=>fk.ExamId);
+
+        // examType 1 --------------------> n examDetail
+        builder.Entity<ExamDetail>()
+                .HasOne(ed=>ed.ExamType)
+                .WithMany(et=>et.examDetails)
+                .HasForeignKey(fk=>fk.ExamTypeId);
+
+        // examDetail n -----------------------> n OriginClass
+        builder.Entity<ExamDetailOriginClass>()
+                .HasOne(edoc=>edoc.ExamDetail)
+                .WithMany(ed=>ed.examDetailOriginClasses)
+                .HasForeignKey(fk=>fk.ExamDetailId);
+
+        builder.Entity<ExamDetailOriginClass>()
+                .HasOne(edoc=>edoc.OriginClass)
+                .WithMany(oc=>oc.examDetailOriginClasses)
+                .HasForeignKey(fk=>fk.OriginClassId);
+
+                
     }
 }

@@ -16,4 +16,5 @@ public class Subject
     public Term Term {get;set;} = new Term();
     
     public ICollection<SubjectOriginClass> subjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
+    public ICollection<ExamDetail> ExamDetails { get; set; } = new List<ExamDetail>();
 }

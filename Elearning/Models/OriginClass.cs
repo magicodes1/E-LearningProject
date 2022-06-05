@@ -29,4 +29,5 @@ public class OriginClass
 
     public Teacher Teacher { get; set; } = new Teacher();
 
+    public ICollection<ExamDetailOriginClass> examDetailOriginClasses { get; set; } = new List<ExamDetailOriginClass>();
 }
