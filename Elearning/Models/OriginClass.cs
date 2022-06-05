@@ -24,4 +24,9 @@ public class OriginClass
 
 
     public ICollection<SubjectOriginClass> SubjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
+
+    public Guid TeacherId { get; set; }
+
+    public Teacher Teacher { get; set; } = new Teacher();
+
 }

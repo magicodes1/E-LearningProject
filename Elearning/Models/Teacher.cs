@@ -17,5 +17,9 @@ public class Teacher
     public ICollection<SubjectOriginClass> SubjectOriginClasses { get; set; } = new List<SubjectOriginClass>();
     public ICollection<OnlineClass> OnlineClasses { get; set; } = new List<OnlineClass>();
 
+
+
+    public OriginClass OriginClass { get; set; } = new OriginClass();
+
     
 }

@@ -185,5 +185,11 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(a=>a.Student)
                 .WithMany(s=>s.Answers)
                 .HasForeignKey(fk=>fk.StudentId);
+        
+        // teacher ---------------------> 1 OriginClass
+        builder.Entity<OriginClass>()
+                .HasOne(oc=>oc.Teacher)
+                .WithOne(t=>t.OriginClass)
+                .HasForeignKey<OriginClass>(fk=>fk.TeacherId);
     }
 }
