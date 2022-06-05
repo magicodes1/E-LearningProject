@@ -257,5 +257,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(s=>s.Teacher)
                 .WithMany(t=>t.Subjects)
                 .HasForeignKey(fk=>fk.TeacherId);
+
+        base.OnModelCreating(builder);
     }
 }
