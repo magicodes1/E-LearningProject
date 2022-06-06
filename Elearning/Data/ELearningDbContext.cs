@@ -139,24 +139,24 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Student>()
                 .HasOne(s=>s.Course)
                 .WithMany(c=>c.Students)
-                .HasForeignKey(fk=>fk.CourseId);
+                .HasForeignKey(fk=>fk.CourseId).OnDelete(DeleteBehavior.Restrict);
         // grade 1 --------------------> n student
         builder.Entity<Student>()
                 .HasOne(s=>s.Grade)
                 .WithMany(g=>g.Students)
-                .HasForeignKey(fk=>fk.GradeId);
+                .HasForeignKey(fk=>fk.GradeId).OnDelete(DeleteBehavior.Restrict);
         // student 1 --------------------->1 user count
         builder.Entity<Student>()
                 .HasOne(s=>s.ApplicationUser)
                 .WithOne(u=>u.Student)
-                .HasForeignKey<ApplicationUser>(fk=>fk.StudentId);
+                .HasForeignKey<ApplicationUser>(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // teacher 1------------------------>1 account
 
         builder.Entity<Teacher>()
                 .HasOne(t=>t.ApplicationUser)
                 .WithOne(u=>u.Teacher)
-                .HasForeignKey<ApplicationUser>(fk=>fk.TeacherId);
+                .HasForeignKey<ApplicationUser>(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1-----------------------> n Message
@@ -169,14 +169,14 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Message>()
                 .HasOne(m=>m.Student)
                 .WithMany(s=>s.Messages)
-                .HasForeignKey(fk=>fk.StudentId);
+                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // techer 1 ----------------------> n message
 
         builder.Entity<Message>()
                 .HasOne(m=>m.Teacher)
                 .WithMany(t=>t.Messages)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1----------------------> n Question
@@ -190,7 +190,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Question>()
                 .HasOne(q=>q.Student)
                 .WithMany(s=>s.Questions)
-                .HasForeignKey(fk=>fk.StudentId);
+                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // Question 1 ---------------------> n Answer
          builder.Entity<Answer>()
@@ -201,18 +201,18 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<Answer>()
                 .HasOne(a=>a.Teacher)
                 .WithMany(t=>t.Answers)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
         // student 1 ----------------> n answer
         builder.Entity<Answer>()
                 .HasOne(a=>a.Student)
                 .WithMany(s=>s.Answers)
-                .HasForeignKey(fk=>fk.StudentId);
+                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
         
         // teacher 1---------------------> 1 OriginClass
         builder.Entity<OriginClass>()
                 .HasOne(oc=>oc.Teacher)
                 .WithOne(t=>t.OriginClass)
-                .HasForeignKey<OriginClass>(fk=>fk.TeacherId);
+                .HasForeignKey<OriginClass>(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
         // subject n --------------------> n exam
         builder.Entity<ExamDetail>().HasKey(k=>k.ExamDetailId);
