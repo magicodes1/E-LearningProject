@@ -16,7 +16,7 @@ public class ExamDetail
     [DataType(DataType.Time)]
     [Required]
     public DateTime ExamTime { get; set; }
-    [Column(TypeName = "Blob")]
+    [Column(TypeName = "blob")]
     public byte[] AttachFile { get; set; } = null!;
 
     public bool isAttached { get; set; }

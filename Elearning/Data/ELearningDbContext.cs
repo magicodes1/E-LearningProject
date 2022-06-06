@@ -56,6 +56,8 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasForeignKey(fk=>fk.CourseId);
                 
         //Term n ----------------> n Subject.
+        builder.Entity<TermSubject>().HasKey(k=> new {k.TermId,k.SubjectId});
+
         builder.Entity<TermSubject>()
                 .HasOne(ts=>ts.Term)
                 .WithMany(t=>t.TermSubjects)
@@ -76,15 +78,17 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
 
 
         // OriginClass n ----------------> n Subject.
+        builder.Entity<SubjectOriginClass>().HasKey(k=>k.SubjectOriginClassId);
+
         builder.Entity<SubjectOriginClass>()
                 .HasOne(soc=>soc.OriginClass)
                 .WithMany(oc=>oc.SubjectOriginClasses)
                 .HasForeignKey(fk=>fk.OriginClassId);
         
         builder.Entity<SubjectOriginClass>()
-                .HasOne(soc=>soc.OriginClass)
-                .WithMany(oc=>oc.SubjectOriginClasses)
-                .HasForeignKey(fk=>fk.OriginClassId);
+                .HasOne(soc=>soc.Subject)
+                .WithMany(s=>s.subjectOriginClasses)
+                .HasForeignKey(fk=>fk.SubjectId);
 
 
         // subjectOriginClass 1 -----------------> 1 OnlineClass
@@ -114,6 +118,8 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
 
 
         //Student n --------------> n ClassDay
+        builder.Entity<StudentClassDay>().HasKey(k=> new {k.ClassDayId,k.StudentId});
+
         builder.Entity<StudentClassDay>()
                 .HasOne(scd=>scd.ClassDay)
                 .WithMany(cd=>cd.StudentClassDays)
@@ -202,13 +208,14 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .WithMany(s=>s.Answers)
                 .HasForeignKey(fk=>fk.StudentId);
         
-        // teacher ---------------------> 1 OriginClass
+        // teacher 1---------------------> 1 OriginClass
         builder.Entity<OriginClass>()
                 .HasOne(oc=>oc.Teacher)
                 .WithOne(t=>t.OriginClass)
                 .HasForeignKey<OriginClass>(fk=>fk.TeacherId);
 
         // subject n --------------------> n exam
+        builder.Entity<ExamDetail>().HasKey(k=>k.ExamDetailId);
 
         builder.Entity<ExamDetail>()
                 .HasOne(ed=>ed.Subject)
@@ -227,6 +234,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasForeignKey(fk=>fk.ExamTypeId);
 
         // examDetail n -----------------------> n OriginClass
+        builder.Entity<ExamDetailOriginClass>().HasKey(k=> new {k.ExamDetailId,k.OriginClassId});
         builder.Entity<ExamDetailOriginClass>()
                 .HasOne(edoc=>edoc.ExamDetail)
                 .WithMany(ed=>ed.examDetailOriginClasses)
@@ -238,6 +246,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasForeignKey(fk=>fk.OriginClassId);
 
         // ExamDetail n-------------->n student
+        builder.Entity<ExamStudent>().HasKey(k=> new {k.ExamDetailId,k.StudentId});
         builder.Entity<ExamStudent>()
                 .HasOne(es=>es.ExamDetail)
                 .WithMany(ed=>ed.ExamStudents)
