@@ -260,7 +260,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<ExamStudent>()
                 .HasOne(es=>es.Teacher)
                 .WithMany(t=>t.ExamStudents)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
         // teacher 1 ----------------> n subject
         builder.Entity<Subject>()
                 .HasOne(s=>s.Teacher)
