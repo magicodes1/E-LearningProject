@@ -100,7 +100,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<SubjectOriginClass>()
                 .HasOne(soc=>soc.Teacher)
                 .WithMany(t=>t.SubjectOriginClasses)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
        //
         
 

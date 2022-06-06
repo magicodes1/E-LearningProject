@@ -13,7 +13,7 @@ public class ExamStudent
     public Student Student { get; set; } = new Student();
     
 
-    [Column(TypeName ="blob")]
+    
     public byte [] AttachFile { get; set; } = null!;
     [Required]
     [Range(1,10)]
