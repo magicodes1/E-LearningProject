@@ -108,7 +108,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<OnlineClass>()
                 .HasOne(oc=>oc.Teacher)
                 .WithMany(t=>t.OnlineClasses)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
         // OnlineClass 1 --------------------> n ClassDay
         builder.Entity<ClassDay>()
@@ -128,7 +128,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
         builder.Entity<StudentClassDay>()
                 .HasOne(scd=>scd.Student)
                 .WithMany(st=>st.StudentClassDays)
-                .HasForeignKey(scd=>scd.StudentId);
+                .HasForeignKey(scd=>scd.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // OriginClass 1 ------------------> n Student
         builder.Entity<Student>()
