@@ -2,14 +2,16 @@ using Microsoft.AspNetCore.Identity;
 using ElearningApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using ElearningApplication.Models.Entities;
+using ElearningApplication.Extensions;
+using ElearningApplication.Models.Error;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<ELearningDbContext>(options=>
+builder.Services.AddDbContext<ELearningDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ELearningDbContext>();
 
 
@@ -34,10 +36,27 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.User.RequireUniqueEmail = false;
 });
 
+// jwt config
+builder.Services.AddJwtTokenAuthentication(builder.Configuration);
+
+
+
+
+
 var app = builder.Build();
 
 app.Logger.LogInformation("Api is creating...................");
 
+// blobal error catching.
+app.ConfigureExceptionHandler();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+app.MapControllers();
 
 
 app.Logger.LogInformation("Launching Application.....");

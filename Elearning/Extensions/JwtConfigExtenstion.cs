@@ -1,0 +1,35 @@
+using System.Text;
+using ElearningApplication.Models.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
+namespace ElearningApplication.Extensions;
+
+public static class JwtConfigExtenstion
+{
+    public static IServiceCollection AddJwtTokenAuthentication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<JwtConfiguration>(configuration.GetSection("JwtConfiguration"));
+
+
+        services.AddAuthentication(opt =>
+       {
+           opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+           opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+       })
+       .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateIssuer = false,
+               ValidateAudience = false,
+               ValidateLifetime = true,
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:SecretKey"])),
+               ClockSkew = TimeSpan.Zero
+           };
+       });
+
+        return services;
+    }
+}
