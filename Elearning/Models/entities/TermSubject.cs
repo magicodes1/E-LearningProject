@@ -1,4 +1,4 @@
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 public class TermSubject
 {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 public class Exam
 {

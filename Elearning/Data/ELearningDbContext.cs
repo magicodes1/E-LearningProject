@@ -1,4 +1,4 @@
-using ElearningApplication.Models;
+using ElearningApplication.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +38,9 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<ExamStudent> ExamStudents { get; set; } = null!;
     public DbSet<TermSubject> TermSubjects { get; set; } = null!;
+
+
+    public DbSet<OTP> OTPs { get; set; } = null!;
 
 
 
@@ -266,6 +269,13 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                 .HasOne(s=>s.Teacher)
                 .WithMany(t=>t.Subjects)
                 .HasForeignKey(fk=>fk.TeacherId);
+
+        // user 1------------------->n otp
+        
+        builder.Entity<OTP>()
+                .HasOne(o=>o.ApplicationUser)
+                .WithMany(u=>u.OTPs)
+                .HasForeignKey(fk=>fk.Id);
 
         base.OnModelCreating(builder);
     }

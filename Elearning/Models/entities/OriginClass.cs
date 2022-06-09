@@ -1,7 +1,7 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 public class OriginClass
 {

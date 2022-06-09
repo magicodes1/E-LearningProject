@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using ElearningApplication.Data;
 using Microsoft.EntityFrameworkCore;
-using ElearningApplication.Models;
+using ElearningApplication.Models.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

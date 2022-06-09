@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 // Lớp này dùng để lưu lại những học sinh đã tham gia buổi học ngày hôm đó và tham gia với thời gian
 //bao lâu để đánh giá điểm chuyên cần

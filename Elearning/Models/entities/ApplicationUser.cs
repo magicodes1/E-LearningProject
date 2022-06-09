@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 public class ApplicationUser : IdentityUser
 {
@@ -13,4 +13,6 @@ public class ApplicationUser : IdentityUser
 
     public Guid TeacherId { get; set; }
     public Teacher Teacher { get; set; } = new Teacher();
+
+    public ICollection<OTP> OTPs { get; set; } = new List<OTP>();
 }

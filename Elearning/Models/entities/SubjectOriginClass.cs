@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ElearningApplication.Models;
+namespace ElearningApplication.Models.Entities;
 
 // Bảng phụ để kết nối bảng originClass và subject.
 // 1 real class sẽ được học rất nhiều môn học, và những môn học đó cũng sẽ được dạy trong nhiều lớp khác nhau.
