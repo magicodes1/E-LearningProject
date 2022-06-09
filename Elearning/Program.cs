@@ -36,5 +36,10 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 var app = builder.Build();
 
+app.Logger.LogInformation("Api is creating...................");
+
+
+
+app.Logger.LogInformation("Launching Application.....");
 
 app.Run();
