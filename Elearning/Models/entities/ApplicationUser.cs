@@ -17,4 +17,6 @@ public class ApplicationUser : IdentityUser
     public Teacher Teacher { get; set; } = new Teacher();
 
     public ICollection<OTP> OTPs { get; set; } = new List<OTP>();
+
+   public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
 }
