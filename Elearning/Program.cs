@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ElearningApplication.Models.Entities;
 using ElearningApplication.Extensions;
 using ElearningApplication.Models.Error;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ELearningDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser,ApplicationRole>()
                 .AddEntityFrameworkStores<ELearningDbContext>();
 
 
@@ -40,7 +41,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 // jwt config
 builder.Services.AddJwtTokenAuthentication(builder.Configuration);
 
+//Auto mapper
 
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 
