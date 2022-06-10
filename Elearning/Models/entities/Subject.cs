@@ -20,5 +20,5 @@ public class Subject
 
 
      public Guid TeacherId { get; set; }
-     public Teacher Teacher { get; set; } = new Teacher();
+     public Teacher Teacher { get; set; } = null!;
 }

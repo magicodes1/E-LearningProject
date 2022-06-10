@@ -14,7 +14,7 @@ public class OriginClass
 
     
     public Guid GradeId { get; set; }
-    public Grade Grade { get; set; } = new Grade();
+    public Grade Grade { get; set; } = null!;
 
 
 
@@ -27,7 +27,7 @@ public class OriginClass
 
     public Guid TeacherId { get; set; }
 
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 
     public ICollection<ExamDetailOriginClass> examDetailOriginClasses { get; set; } = new List<ExamDetailOriginClass>();
 }

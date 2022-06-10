@@ -7,10 +7,10 @@ namespace ElearningApplication.Models.Entities;
 public class ExamStudent
 {
     public Guid ExamDetailId { get; set; }
-    public ExamDetail ExamDetail { get; set; } = new ExamDetail();
+    public ExamDetail ExamDetail { get; set; } = null!;
 
     public Guid StudentId { get; set; }
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
     
 
     
@@ -30,5 +30,5 @@ public class ExamStudent
     public string Remark { get; set; } = string.Empty;
 
     public Guid TeacherId { get; set; }
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 }

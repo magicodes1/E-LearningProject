@@ -8,11 +8,11 @@ public class StudentClassDay
 {
     public Guid ClassDayId { get; set; }
 
-    public ClassDay ClassDay { get; set; } = new ClassDay();
+    public ClassDay ClassDay { get; set; } = null!;
 
 
     public Guid StudentId { get; set; }
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
     
 
     [DataType(DataType.Time)]

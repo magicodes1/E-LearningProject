@@ -11,10 +11,10 @@ public class ApplicationUser : IdentityUser
     public DateTime PasswordResetStartDate { get; set; }
 
     public Guid StudentId { get; set; }
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
 
     public Guid TeacherId { get; set; }
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 
     public ICollection<OTP> OTPs { get; set; } = new List<OTP>();
 

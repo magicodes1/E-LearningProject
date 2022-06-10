@@ -12,14 +12,14 @@ public class SubjectOriginClass
     public Guid SubjectOriginClassId { get; set; }
 
     public Guid OriginClassId { get; set; }
-    public OriginClass OriginClass { get; set; } = new OriginClass();
+    public OriginClass OriginClass { get; set; } = null!;
 
     public Guid SubjectId { get; set; }
-    public Subject Subject { get; set; } = new Subject();
+    public Subject Subject { get; set; } = null!;
 
-    public OnlineClass OnlineClass { get; set; } = new OnlineClass();
+    public OnlineClass OnlineClass { get; set; } = null!;
 
     public Guid TeacherId { get; set; }
 
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 }

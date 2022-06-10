@@ -4,6 +4,6 @@ namespace ElearningApplication.Models.Entities;
 
 public class ApplicationUserRole : IdentityUserRole<string>
 {
-    public virtual ApplicationUser User { get; set; } = new ApplicationUser();
-    public virtual ApplicationRole Role { get; set; } = new ApplicationRole();
+    public virtual ApplicationUser User { get; set; } = null!;
+    public virtual ApplicationRole Role { get; set; } = null!;
 }

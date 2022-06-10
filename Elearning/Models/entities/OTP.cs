@@ -14,5 +14,5 @@ public class OTP
     [Required]
     public string  Id { get; set; } = string.Empty;
 
-    public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
+    public ApplicationUser ApplicationUser { get; set; } = null!;
 }

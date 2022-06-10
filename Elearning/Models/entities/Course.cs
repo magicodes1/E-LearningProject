@@ -15,7 +15,7 @@ public class Course
 
 
     public Guid GradeId { get; set; }
-    public Grade Grade { get; set; } = new Grade();
+    public Grade Grade { get; set; } = null!;
 
 
 
