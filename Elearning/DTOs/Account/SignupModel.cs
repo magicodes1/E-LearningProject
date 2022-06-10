@@ -16,4 +16,17 @@ public class SignupModel
     [StringLength(10)]
     [RegularExpression(@"^[0-9]*$")]
     public string PhoneNumber { get; set; } = string.Empty;
+
+    public SignupModel()
+    {
+
+    }
+
+    public SignupModel(string userName, string password, string email, string phoneNumber)
+    {
+        UserName = userName;
+        Password = password;
+        Email = email;
+        PhoneNumber = phoneNumber;
+    }
 }

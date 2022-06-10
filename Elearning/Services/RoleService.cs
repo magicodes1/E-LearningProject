@@ -10,13 +10,13 @@ namespace ElearningApplication.Services;
 
 public class RoleService : IRoleService
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
 
     private readonly UserManager<ApplicationUser> _userManager;
 
     private readonly IMapper _mapper;
 
-    public RoleService(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IMapper mapper)
+    public RoleService(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager, IMapper mapper)
     {
         _roleManager = roleManager;
         _userManager = userManager;
@@ -28,7 +28,7 @@ public class RoleService : IRoleService
         //Create new role if it isn't existense.
         if (!await _roleManager.RoleExistsAsync(role))
         {
-            await _roleManager.CreateAsync(new IdentityRole(role));
+            await _roleManager.CreateAsync(new ApplicationRole {Name=role,NormalizedName=role});
         }
 
         var user = await _userManager.FindByIdAsync(id);
@@ -37,7 +37,13 @@ public class RoleService : IRoleService
 
         var result = await _userManager.AddToRoleAsync(user,role);
 
-        if(!result.Succeeded) throw new BadRequestException($"Adding role {role} to user {id} is failed.");
+        if(!result.Succeeded) 
+        {
+            foreach (var error in result.Errors)
+            {
+                throw new BadRequestException($"{error.Description}");
+            }
+        }
 
         return user;
     }

@@ -5,9 +5,16 @@ using ElearningApplication.Models.Entities;
 using ElearningApplication.Extensions;
 using ElearningApplication.Models.Error;
 using System.Reflection;
+using ElearningApplication.Services;
+using ElearningApplication.Interfaces.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(option =>
+            {
+                option.SuppressModelStateInvalidFilter = true;
+            });
 
 builder.Services.AddDbContext<ELearningDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
@@ -46,12 +53,27 @@ builder.Services.AddJwtTokenAuthentication(builder.Configuration);
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
+builder.Services.AddScoped<IAccountService,AccountService>();
+builder.Services.AddScoped<IRoleService,RoleService>();
+
+
 
 var app = builder.Build();
 
 app.Logger.LogInformation("Api is creating...................");
 
-// blobal error catching.
+
+// app.Logger.LogInformation("create seed data...................");
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+
+//     SeedData.Initialize(services);
+// }
+// app.Logger.LogInformation("create seed data completed...................");
+
+// global error catching.
 app.ConfigureExceptionHandler();
 
 app.UseRouting();

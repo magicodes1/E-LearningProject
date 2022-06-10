@@ -16,13 +16,18 @@ public class AccountService : IAccountService
 
     private readonly IMapper _mapper;
 
+
+    private readonly ILogger<AccountService> _logger;
+
     public AccountService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        IMapper mapper)
+        IMapper mapper,
+        ILogger<AccountService> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<DataResponse> Signup(SignupModel signupModel)
@@ -36,7 +41,16 @@ public class AccountService : IAccountService
 
         var result = await _userManager.CreateAsync(user, signupModel.Password);
 
-        if (!result.Succeeded) throw new BadRequestException($"Sign up fail.");
+
+
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                throw new BadRequestException($"{error.Description}");
+            }
+
+        }
 
 
         var userDTO = _mapper.Map<UserDTO>(user);
