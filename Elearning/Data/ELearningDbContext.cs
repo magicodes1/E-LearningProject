@@ -158,14 +158,16 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
         builder.Entity<Student>()
                 .HasOne(s => s.ApplicationUser)
                 .WithOne(u => u.Student)
-                .HasForeignKey<ApplicationUser>(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<ApplicationUser>(fk => fk.StudentId).IsRequired(false).
+                 OnDelete(DeleteBehavior.Restrict);
 
         // teacher 1------------------------>1 account
 
         builder.Entity<Teacher>()
                 .HasOne(t => t.ApplicationUser)
                 .WithOne(u => u.Teacher)
-                .HasForeignKey<ApplicationUser>(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey<ApplicationUser>(fk => fk.TeacherId).IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1-----------------------> n Message
@@ -178,14 +180,18 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
         builder.Entity<Message>()
                 .HasOne(m => m.Student)
                 .WithMany(s => s.Messages)
-                .HasForeignKey(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(fk => fk.StudentId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
         // techer 1 ----------------------> n message
 
         builder.Entity<Message>()
                 .HasOne(m => m.Teacher)
                 .WithMany(t => t.Messages)
-                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(fk => fk.TeacherId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1----------------------> n Question
@@ -210,11 +216,14 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
         builder.Entity<Answer>()
                 .HasOne(a => a.Teacher)
                 .WithMany(t => t.Answers)
-                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(fk => fk.TeacherId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
         // student 1 ----------------> n answer
         builder.Entity<Answer>()
                 .HasOne(a => a.Student)
                 .WithMany(s => s.Answers)
+                .IsRequired(false)
                 .HasForeignKey(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // teacher 1---------------------> 1 OriginClass
@@ -299,5 +308,24 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
                .HasOne(ur => ur.User)
                .WithMany(u => u.UserRoles)
                .HasForeignKey(fk => fk.UserId);
+
+        
+        //-----------------
+
+        builder.Entity<ApplicationUser>()
+                        .Property(u=>u.StudentId).IsRequired(false);
+        builder.Entity<ApplicationUser>()
+                        .Property(u=>u.TeacherId).IsRequired(false);
+        //---------------
+        builder.Entity<Message>()
+                        .Property(m=>m.StudentId).IsRequired(false);
+        builder.Entity<Message>()
+                        .Property(m=>m.TeacherId).IsRequired(false);
+        //-------------------
+        builder.Entity<Answer>()
+                        .Property(m=>m.StudentId).IsRequired(false);
+        builder.Entity<Answer>()
+                        .Property(m=>m.TeacherId).IsRequired(false);
+                
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elearning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    [Migration("20220610082431_CustomRole")]
-    partial class CustomRole
+    [Migration("20220610113712_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,10 +40,10 @@ namespace Elearning.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TeacherId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("AnswerId");
@@ -137,10 +137,10 @@ namespace Elearning.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TeacherId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -161,10 +161,12 @@ namespace Elearning.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.HasIndex("StudentId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[StudentId] IS NOT NULL");
 
                     b.HasIndex("TeacherId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[TeacherId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -404,10 +406,10 @@ namespace Elearning.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid?>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("TeacherId")
+                    b.Property<Guid?>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MessageId");
@@ -824,14 +826,12 @@ namespace Elearning.Migrations
                     b.HasOne("ElearningApplication.Models.Entities.Student", "Student")
                         .WithMany("Answers")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ElearningApplication.Models.Entities.Teacher", "Teacher")
                         .WithMany("Answers")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Question");
 
@@ -845,14 +845,12 @@ namespace Elearning.Migrations
                     b.HasOne("ElearningApplication.Models.Entities.Student", "Student")
                         .WithOne("ApplicationUser")
                         .HasForeignKey("ElearningApplication.Models.Entities.ApplicationUser", "StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ElearningApplication.Models.Entities.Teacher", "Teacher")
                         .WithOne("ApplicationUser")
                         .HasForeignKey("ElearningApplication.Models.Entities.ApplicationUser", "TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Student");
 
@@ -984,14 +982,12 @@ namespace Elearning.Migrations
                     b.HasOne("ElearningApplication.Models.Entities.Student", "Student")
                         .WithMany("Messages")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ElearningApplication.Models.Entities.Teacher", "Teacher")
                         .WithMany("Messages")
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OnlineClass");
 

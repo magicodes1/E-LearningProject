@@ -18,12 +18,12 @@ public class Message
     public OnlineClass OnlineClass { get; set; } = null!;
 
 
-    public Guid StudentId { get; set; }
+    public Guid? StudentId { get; set; }
 
     public Student Student { get; set; } = null!;
     
 
-    public Guid TeacherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
     public Teacher Teacher { get; set; } = null!;
 

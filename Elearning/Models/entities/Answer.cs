@@ -17,11 +17,11 @@ public class Answer
     public Guid QuestionId { get; set; }
     public Question Question { get; set; } = null!;
 
-    public Guid TeacherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
     public Teacher Teacher { get; set; } = null!;
 
-    public Guid StudentId { get; set; }
+    public Guid? StudentId { get; set; }
 
     public Student Student { get; set; } = null!;
 }

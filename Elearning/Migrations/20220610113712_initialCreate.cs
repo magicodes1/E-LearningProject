@@ -316,8 +316,9 @@ namespace Elearning.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PasswordResetStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -495,7 +496,7 @@ namespace Elearning.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.RoleId, x.UserId });
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
@@ -531,6 +532,26 @@ namespace Elearning.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OTPs",
+                columns: table => new
+                {
+                    OTPId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiredTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OTPs", x => x.OTPId);
+                    table.ForeignKey(
+                        name: "FK_OTPs_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ClassDays",
                 columns: table => new
                 {
@@ -558,8 +579,8 @@ namespace Elearning.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OnlineClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -644,8 +665,8 @@ namespace Elearning.Migrations
                     AnswerContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -708,9 +729,9 @@ namespace Elearning.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
+                name: "IX_AspNetUserRoles_UserId",
                 table: "AspNetUserRoles",
-                column: "RoleId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -721,13 +742,15 @@ namespace Elearning.Migrations
                 name: "IX_AspNetUsers_StudentId",
                 table: "AspNetUsers",
                 column: "StudentId",
-                unique: true);
+                unique: true,
+                filter: "[StudentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_TeacherId",
                 table: "AspNetUsers",
                 column: "TeacherId",
-                unique: true);
+                unique: true,
+                filter: "[TeacherId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -812,6 +835,11 @@ namespace Elearning.Migrations
                 table: "OriginClasses",
                 column: "TeacherId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OTPs_Id",
+                table: "OTPs",
+                column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_OnlineClassId",
@@ -904,6 +932,9 @@ namespace Elearning.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "OTPs");
+
+            migrationBuilder.DropTable(
                 name: "StudentClassDays");
 
             migrationBuilder.DropTable(
@@ -916,10 +947,10 @@ namespace Elearning.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ExamDetails");
 
             migrationBuilder.DropTable(
-                name: "ExamDetails");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "ClassDays");
@@ -928,13 +959,13 @@ namespace Elearning.Migrations
                 name: "Terms");
 
             migrationBuilder.DropTable(
-                name: "Students");
-
-            migrationBuilder.DropTable(
                 name: "Exams");
 
             migrationBuilder.DropTable(
                 name: "ExamTypes");
+
+            migrationBuilder.DropTable(
+                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "OnlineClasses");
