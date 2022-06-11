@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elearning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    [Migration("20220611071947_initialCreate")]
-    partial class initialCreate
+    [Migration("20220611081923_initialCreation")]
+    partial class initialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -516,7 +516,7 @@ namespace Elearning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpiredTime")
+                    b.Property<DateTime?>("ExpiredTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Id")

@@ -514,7 +514,7 @@ namespace Elearning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ExpiredTime")
+                    b.Property<DateTime?>("ExpiredTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Id")

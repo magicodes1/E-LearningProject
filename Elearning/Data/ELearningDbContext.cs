@@ -336,6 +336,7 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
         builder.Entity<ExamDetail>()
                 .Property(ed=>ed.AttachFile).IsRequired(false);
         //------------------------
-                
+        builder.Entity<OTP>()
+                .Property(o=>o.ExpiredTime).IsRequired(false); 
     }
 }

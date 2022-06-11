@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elearning.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class initialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -537,7 +537,7 @@ namespace Elearning.Migrations
                 {
                     OTPId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpiredTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpiredTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
