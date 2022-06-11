@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elearning.Migrations
 {
     [DbContext(typeof(ELearningDbContext))]
-    [Migration("20220610113712_initialCreate")]
+    [Migration("20220611071947_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,7 +93,6 @@ namespace Elearning.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -262,7 +261,6 @@ namespace Elearning.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("AttachFile")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
@@ -330,7 +328,6 @@ namespace Elearning.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte[]>("AttachFile")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("CompletedDay")

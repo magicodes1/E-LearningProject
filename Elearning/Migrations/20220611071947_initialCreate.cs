@@ -223,7 +223,7 @@ namespace Elearning.Migrations
                     Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExamTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AttachFile = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    AttachFile = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     isAttached = table.Column<bool>(type: "bit", nullable: false),
                     StartDay = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDay = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -315,7 +315,7 @@ namespace Elearning.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     PasswordResetStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -381,7 +381,7 @@ namespace Elearning.Migrations
                 {
                     ExamDetailId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AttachFile = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    AttachFile = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Score = table.Column<int>(type: "int", nullable: false),
                     CompletedDay = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompletedTime = table.Column<DateTime>(type: "datetime2", nullable: false),

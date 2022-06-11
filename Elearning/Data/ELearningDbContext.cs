@@ -316,6 +316,8 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
                         .Property(u=>u.StudentId).IsRequired(false);
         builder.Entity<ApplicationUser>()
                         .Property(u=>u.TeacherId).IsRequired(false);
+        builder.Entity<ApplicationUser>()
+                .Property(u=>u.Avatar).IsRequired(false);
         //---------------
         builder.Entity<Message>()
                         .Property(m=>m.StudentId).IsRequired(false);
@@ -326,6 +328,14 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser,ApplicationR
                         .Property(m=>m.StudentId).IsRequired(false);
         builder.Entity<Answer>()
                         .Property(m=>m.TeacherId).IsRequired(false);
+        
+        //--------------------
+        builder.Entity<ExamStudent>()
+                .Property(es=>es.AttachFile).IsRequired(false);
+        //----------------------
+        builder.Entity<ExamDetail>()
+                .Property(ed=>ed.AttachFile).IsRequired(false);
+        //------------------------
                 
     }
 }
