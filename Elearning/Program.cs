@@ -7,6 +7,10 @@ using ElearningApplication.Models.Error;
 using System.Reflection;
 using ElearningApplication.Services;
 using ElearningApplication.Interfaces.Services;
+using ElearningApplication.Models.Email;
+using ElearningApplication.Interfaces.Email;
+using ElearningApplication.Interfaces.Unit;
+using ElearningApplication.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +61,14 @@ builder.Services.AddScoped<IAccountService,AccountService>();
 builder.Services.AddScoped<IRoleService,RoleService>();
 builder.Services.AddScoped<ITokenService,TokenService>();
 
+//config email
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+                            .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender,MailSender>();
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 var app = builder.Build();
 

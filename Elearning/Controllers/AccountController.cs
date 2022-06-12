@@ -47,4 +47,43 @@ public class AccountController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPost]
+    [Route("password-reset")]
+    public async Task<IActionResult> PasswordReset(PasswordResetModel passwordResetModel)
+    {
+        if (passwordResetModel == null) throw new BadRequestException("payload is null");
+
+        if (!ModelState.IsValid) throw new BadRequestException("Model is invalid");
+
+        await _account.PasswordReset(passwordResetModel);
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("verify-otp")]
+    public async Task<IActionResult> VerifyOtp(VerifyCodeModel verifyCodeModel)
+    {
+        if (verifyCodeModel == null) throw new BadRequestException("payload is null");
+
+        if (!ModelState.IsValid) throw new BadRequestException("Model is invalid");
+
+        await _account.VerifyCode(verifyCodeModel);
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("change-password")]
+    public async Task<IActionResult> ChangePassword(ChangePasswordModel changePasswordModel)
+    {
+        if (changePasswordModel == null) throw new BadRequestException("payload is null");
+
+        if (!ModelState.IsValid) throw new BadRequestException("Model is invalid");
+
+        await _account.ChangePassword(changePasswordModel);
+
+        return NoContent();
+    }
 }

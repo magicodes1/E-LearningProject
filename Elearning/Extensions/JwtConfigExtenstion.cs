@@ -1,4 +1,5 @@
 using System.Text;
+using ElearningApplication.Exceptions;
 using ElearningApplication.Models.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +28,15 @@ public static class JwtConfigExtenstion
                ValidateIssuerSigningKey = true,
                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfiguration:SecretKey"])),
                ClockSkew = TimeSpan.Zero
+           };
+           options.Events = new JwtBearerEvents()
+           {
+               OnAuthenticationFailed = e =>
+               {
+                   throw new Exception(e.Exception.Message.ToString());
+               },
+               OnChallenge = e => throw new UnAuthenticationException("You are not authorized to access this resource."),
+               OnForbidden = e => throw new ForbiddenException("Your Token is been expired.")
            };
        });
 

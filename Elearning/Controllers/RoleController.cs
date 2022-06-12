@@ -19,7 +19,7 @@ public class RoleController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles ="ADMIN,LEADERSHIP")]
+    //[Authorize(Roles ="ADMIN,LEADERSHIP")]
     public async Task<IActionResult> AddRoleToUser(RoleModel roleModel)
     {
         if (roleModel == null) throw new BadRequestException("payload is null");
