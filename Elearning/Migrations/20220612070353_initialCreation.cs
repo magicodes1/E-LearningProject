@@ -316,7 +316,6 @@ namespace Elearning.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    PasswordResetStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -537,7 +536,10 @@ namespace Elearning.Migrations
                 {
                     OTPId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpiredTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isVerified = table.Column<bool>(type: "bit", nullable: false),
+                    isActive = table.Column<bool>(type: "bit", nullable: false),
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
