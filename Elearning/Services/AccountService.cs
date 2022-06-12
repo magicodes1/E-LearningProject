@@ -5,6 +5,7 @@ using ElearningApplication.Interfaces.Services;
 using ElearningApplication.Models.Entities;
 using ElearningApplication.Models.Response;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace ElearningApplication.Services;
 
@@ -15,6 +16,7 @@ public class AccountService : IAccountService
     private readonly SignInManager<ApplicationUser> _signInManager;
 
     private readonly IMapper _mapper;
+    private readonly ITokenService _token;
 
 
     private readonly ILogger<AccountService> _logger;
@@ -22,12 +24,40 @@ public class AccountService : IAccountService
     public AccountService(UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IMapper mapper,
-        ILogger<AccountService> logger)
+        ILogger<AccountService> logger,
+        ITokenService token)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _mapper = mapper;
         _logger = logger;
+        _token = token;
+    }
+
+    public async Task<DataResponse> Signin(SigninModel signinModel)
+    {
+        var user = await _userManager.Users.Where(u=>u.UserName==signinModel.UserName)
+                        .Include(u => u.UserRoles.Where(us => us.RoleId==signinModel.Role))
+                        .ThenInclude(r=>r.Role)
+                        .SingleOrDefaultAsync();
+
+        if (user == null) throw new NotFoundException("User is not found");
+
+        var isCorrect = await _userManager.CheckPasswordAsync(user, signinModel.Password);
+
+        if (!isCorrect) throw new BadRequestException("Password is wrong for this user.");
+
+        var userRoleDTO = _mapper.Map<UserRoleDTO>(user);
+        
+        var roles = new List<string>();
+        foreach (var role in userRoleDTO.Roles)
+        {
+            roles.Add(role.Name);
+        }
+
+        var token = _token.tokenGeneration(userRoleDTO.UserName,userRoleDTO.Id,roles);
+
+        return new DataResponse(true,token,null!);
     }
 
     public async Task<DataResponse> Signup(SignupModel signupModel)

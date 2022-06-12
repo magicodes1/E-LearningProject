@@ -2,6 +2,7 @@ using AutoMapper;
 using ElearningApplication.DTOs.Account;
 using ElearningApplication.Exceptions;
 using ElearningApplication.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElearningApplication.Controller;
@@ -18,6 +19,7 @@ public class RoleController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles ="ADMIN,LEADERSHIP")]
     public async Task<IActionResult> AddRoleToUser(RoleModel roleModel)
     {
         if (roleModel == null) throw new BadRequestException("payload is null");

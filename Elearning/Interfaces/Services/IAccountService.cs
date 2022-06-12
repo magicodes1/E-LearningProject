@@ -6,4 +6,5 @@ namespace ElearningApplication.Interfaces.Services;
 public interface IAccountService
 {
     Task<DataResponse> Signup(SignupModel signupModel);
+    Task<DataResponse> Signin(SigninModel signinModel);
 }

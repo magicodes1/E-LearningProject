@@ -9,7 +9,7 @@ public class OTP
     public Guid OTPId { get; set; }
     public string Code { get; set; } = string.Empty;
     [DataType(DataType.Time)]
-    public DateTime ExpiredTime { get; set; }
+    public DateTime? ExpiredTime { get; set; }
     
     [Required]
     public string  Id { get; set; } = string.Empty;

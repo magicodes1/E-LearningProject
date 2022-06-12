@@ -55,7 +55,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IAccountService,AccountService>();
 builder.Services.AddScoped<IRoleService,RoleService>();
-
+builder.Services.AddScoped<ITokenService,TokenService>();
 
 
 var app = builder.Build();
