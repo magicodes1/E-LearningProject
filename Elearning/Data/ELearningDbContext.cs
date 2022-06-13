@@ -54,228 +54,228 @@ public class ELearningDbContext : IdentityDbContext<ApplicationUser>
                  .HasForeignKey(fk => fk.GradeId);
         // Course 1 ---------------> n Term
         builder.Entity<Term>()
-                .HasOne(t=>t.Course)
-                .WithMany(c=>c.Terms)
-                .HasForeignKey(fk=>fk.CourseId);
-                
+                .HasOne(t => t.Course)
+                .WithMany(c => c.Terms)
+                .HasForeignKey(fk => fk.CourseId);
+
         //Term n ----------------> n Subject.
-        builder.Entity<TermSubject>().HasKey(k=> new {k.TermId,k.SubjectId});
+        builder.Entity<TermSubject>().HasKey(k => new { k.TermId, k.SubjectId });
 
         builder.Entity<TermSubject>()
-                .HasOne(ts=>ts.Term)
-                .WithMany(t=>t.TermSubjects)
-                .HasForeignKey(fk=>fk.TermId);
-        
-         builder.Entity<TermSubject>()
-                .HasOne(ts=>ts.Subject)
-                .WithMany(s=>s.TermSubjects)
-                .HasForeignKey(fk=>fk.SubjectId);
+                .HasOne(ts => ts.Term)
+                .WithMany(t => t.TermSubjects)
+                .HasForeignKey(fk => fk.TermId);
+
+        builder.Entity<TermSubject>()
+               .HasOne(ts => ts.Subject)
+               .WithMany(s => s.TermSubjects)
+               .HasForeignKey(fk => fk.SubjectId);
 
 
 
         // grade 1 ---------------> n originClass
         builder.Entity<OriginClass>()
-                .HasOne(oc=>oc.Grade)
-                .WithMany(g=>g.originClasses)
-                .HasForeignKey(fk=>fk.GradeId);
+                .HasOne(oc => oc.Grade)
+                .WithMany(g => g.originClasses)
+                .HasForeignKey(fk => fk.GradeId);
 
 
         // OriginClass n ----------------> n Subject.
-        builder.Entity<SubjectOriginClass>().HasKey(k=>k.SubjectOriginClassId);
+        builder.Entity<SubjectOriginClass>().HasKey(k => k.SubjectOriginClassId);
 
         builder.Entity<SubjectOriginClass>()
-                .HasOne(soc=>soc.OriginClass)
-                .WithMany(oc=>oc.SubjectOriginClasses)
-                .HasForeignKey(fk=>fk.OriginClassId);
-        
+                .HasOne(soc => soc.OriginClass)
+                .WithMany(oc => oc.SubjectOriginClasses)
+                .HasForeignKey(fk => fk.OriginClassId);
+
         builder.Entity<SubjectOriginClass>()
-                .HasOne(soc=>soc.Subject)
-                .WithMany(s=>s.subjectOriginClasses)
-                .HasForeignKey(fk=>fk.SubjectId);
+                .HasOne(soc => soc.Subject)
+                .WithMany(s => s.subjectOriginClasses)
+                .HasForeignKey(fk => fk.SubjectId);
 
 
         // subjectOriginClass 1 -----------------> 1 OnlineClass
         builder.Entity<SubjectOriginClass>()
-                .HasOne(soc=>soc.OnlineClass)
-                .WithOne(oc=>oc.SubjectOriginClass)
-                .HasForeignKey<OnlineClass>(oc=>oc.SubjectOriginClassId);
+                .HasOne(soc => soc.OnlineClass)
+                .WithOne(oc => oc.SubjectOriginClass)
+                .HasForeignKey<OnlineClass>(oc => oc.SubjectOriginClassId);
         // techer 1 --------------------> n SubjectOriginClass
         builder.Entity<SubjectOriginClass>()
-                .HasOne(soc=>soc.Teacher)
-                .WithMany(t=>t.SubjectOriginClasses)
-                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
-       //
-        
+                .HasOne(soc => soc.Teacher)
+                .WithMany(t => t.SubjectOriginClasses)
+                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+        //
+
 
         // techer 1 -----------------> n onlineClass
         builder.Entity<OnlineClass>()
-                .HasOne(oc=>oc.Teacher)
-                .WithMany(t=>t.OnlineClasses)
-                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(oc => oc.Teacher)
+                .WithMany(t => t.OnlineClasses)
+                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
         // OnlineClass 1 --------------------> n ClassDay
         builder.Entity<ClassDay>()
-                .HasOne(cd=>cd.onlineClass)
-                .WithMany(oc=>oc.ClassDays)
-                .HasForeignKey(cd=>cd.OnlineClassId);
+                .HasOne(cd => cd.onlineClass)
+                .WithMany(oc => oc.ClassDays)
+                .HasForeignKey(cd => cd.OnlineClassId);
 
 
         //Student n --------------> n ClassDay
-        builder.Entity<StudentClassDay>().HasKey(k=> new {k.ClassDayId,k.StudentId});
+        builder.Entity<StudentClassDay>().HasKey(k => new { k.ClassDayId, k.StudentId });
 
         builder.Entity<StudentClassDay>()
-                .HasOne(scd=>scd.ClassDay)
-                .WithMany(cd=>cd.StudentClassDays)
-                .HasForeignKey(scd=>scd.ClassDayId);
+                .HasOne(scd => scd.ClassDay)
+                .WithMany(cd => cd.StudentClassDays)
+                .HasForeignKey(scd => scd.ClassDayId);
 
         builder.Entity<StudentClassDay>()
-                .HasOne(scd=>scd.Student)
-                .WithMany(st=>st.StudentClassDays)
-                .HasForeignKey(scd=>scd.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(scd => scd.Student)
+                .WithMany(st => st.StudentClassDays)
+                .HasForeignKey(scd => scd.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // OriginClass 1 ------------------> n Student
         builder.Entity<Student>()
-                .HasOne(s=>s.originClass)
-                .WithMany(oc=>oc.Students)
-                .HasForeignKey(fk=>fk.OriginClassId);
+                .HasOne(s => s.originClass)
+                .WithMany(oc => oc.Students)
+                .HasForeignKey(fk => fk.OriginClassId);
         // Course 1 ------------------------> n student
         builder.Entity<Student>()
-                .HasOne(s=>s.Course)
-                .WithMany(c=>c.Students)
-                .HasForeignKey(fk=>fk.CourseId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(s => s.Course)
+                .WithMany(c => c.Students)
+                .HasForeignKey(fk => fk.CourseId).OnDelete(DeleteBehavior.Restrict);
         // grade 1 --------------------> n student
         builder.Entity<Student>()
-                .HasOne(s=>s.Grade)
-                .WithMany(g=>g.Students)
-                .HasForeignKey(fk=>fk.GradeId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(s => s.Grade)
+                .WithMany(g => g.Students)
+                .HasForeignKey(fk => fk.GradeId).OnDelete(DeleteBehavior.Restrict);
         // student 1 --------------------->1 user count
         builder.Entity<Student>()
-                .HasOne(s=>s.ApplicationUser)
-                .WithOne(u=>u.Student)
-                .HasForeignKey<ApplicationUser>(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(s => s.ApplicationUser)
+                .WithOne(u => u.Student)
+                .HasForeignKey<ApplicationUser>(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // teacher 1------------------------>1 account
 
         builder.Entity<Teacher>()
-                .HasOne(t=>t.ApplicationUser)
-                .WithOne(u=>u.Teacher)
-                .HasForeignKey<ApplicationUser>(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(t => t.ApplicationUser)
+                .WithOne(u => u.Teacher)
+                .HasForeignKey<ApplicationUser>(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1-----------------------> n Message
         builder.Entity<Message>()
-                .HasOne(m=>m.OnlineClass)
-                .WithMany(oc=>oc.Messages)
-                .HasForeignKey(fk=>fk.OnlineClassId);
+                .HasOne(m => m.OnlineClass)
+                .WithMany(oc => oc.Messages)
+                .HasForeignKey(fk => fk.OnlineClassId);
 
         // student 1 -----------------------> n message
         builder.Entity<Message>()
-                .HasOne(m=>m.Student)
-                .WithMany(s=>s.Messages)
-                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(m => m.Student)
+                .WithMany(s => s.Messages)
+                .HasForeignKey(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // techer 1 ----------------------> n message
 
         builder.Entity<Message>()
-                .HasOne(m=>m.Teacher)
-                .WithMany(t=>t.Messages)
-                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(m => m.Teacher)
+                .WithMany(t => t.Messages)
+                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
 
         // onlineClass 1----------------------> n Question
-         builder.Entity<Question>()
-                .HasOne(q=>q.OnlineClass)
-                .WithMany(oc=>oc.Questions)
-                .HasForeignKey(fk=>fk.OnlineClassId);
-        
+        builder.Entity<Question>()
+               .HasOne(q => q.OnlineClass)
+               .WithMany(oc => oc.Questions)
+               .HasForeignKey(fk => fk.OnlineClassId);
+
         // student 1 ----------------> n question
 
         builder.Entity<Question>()
-                .HasOne(q=>q.Student)
-                .WithMany(s=>s.Questions)
-                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(q => q.Student)
+                .WithMany(s => s.Questions)
+                .HasForeignKey(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
 
         // Question 1 ---------------------> n Answer
-         builder.Entity<Answer>()
-                .HasOne(a=>a.Question)
-                .WithMany(oc=>oc.Answers)
-                .HasForeignKey(fk=>fk.QuestionId);
+        builder.Entity<Answer>()
+               .HasOne(a => a.Question)
+               .WithMany(oc => oc.Answers)
+               .HasForeignKey(fk => fk.QuestionId);
         // 1 techer -------------------> n answer
         builder.Entity<Answer>()
-                .HasOne(a=>a.Teacher)
-                .WithMany(t=>t.Answers)
-                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(a => a.Teacher)
+                .WithMany(t => t.Answers)
+                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
         // student 1 ----------------> n answer
         builder.Entity<Answer>()
-                .HasOne(a=>a.Student)
-                .WithMany(s=>s.Answers)
-                .HasForeignKey(fk=>fk.StudentId).OnDelete(DeleteBehavior.Restrict);
-        
+                .HasOne(a => a.Student)
+                .WithMany(s => s.Answers)
+                .HasForeignKey(fk => fk.StudentId).OnDelete(DeleteBehavior.Restrict);
+
         // teacher 1---------------------> 1 OriginClass
         builder.Entity<OriginClass>()
-                .HasOne(oc=>oc.Teacher)
-                .WithOne(t=>t.OriginClass)
-                .HasForeignKey<OriginClass>(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(oc => oc.Teacher)
+                .WithOne(t => t.OriginClass)
+                .HasForeignKey<OriginClass>(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
 
         // subject n --------------------> n exam
-        builder.Entity<ExamDetail>().HasKey(k=>k.ExamDetailId);
+        builder.Entity<ExamDetail>().HasKey(k => k.ExamDetailId);
 
         builder.Entity<ExamDetail>()
-                .HasOne(ed=>ed.Subject)
-                .WithMany(s=>s.ExamDetails)
-                .HasForeignKey(fk=>fk.SubjectId);
+                .HasOne(ed => ed.Subject)
+                .WithMany(s => s.ExamDetails)
+                .HasForeignKey(fk => fk.SubjectId);
 
         builder.Entity<ExamDetail>()
-                .HasOne(ed=>ed.Exam)
-                .WithMany(e=>e.ExamDetails)
-                .HasForeignKey(fk=>fk.ExamId);
+                .HasOne(ed => ed.Exam)
+                .WithMany(e => e.ExamDetails)
+                .HasForeignKey(fk => fk.ExamId);
 
         // examType 1 --------------------> n examDetail
         builder.Entity<ExamDetail>()
-                .HasOne(ed=>ed.ExamType)
-                .WithMany(et=>et.examDetails)
-                .HasForeignKey(fk=>fk.ExamTypeId);
+                .HasOne(ed => ed.ExamType)
+                .WithMany(et => et.examDetails)
+                .HasForeignKey(fk => fk.ExamTypeId);
 
         // examDetail n -----------------------> n OriginClass
-        builder.Entity<ExamDetailOriginClass>().HasKey(k=> new {k.ExamDetailId,k.OriginClassId});
+        builder.Entity<ExamDetailOriginClass>().HasKey(k => new { k.ExamDetailId, k.OriginClassId });
         builder.Entity<ExamDetailOriginClass>()
-                .HasOne(edoc=>edoc.ExamDetail)
-                .WithMany(ed=>ed.examDetailOriginClasses)
-                .HasForeignKey(fk=>fk.ExamDetailId);
+                .HasOne(edoc => edoc.ExamDetail)
+                .WithMany(ed => ed.examDetailOriginClasses)
+                .HasForeignKey(fk => fk.ExamDetailId);
 
         builder.Entity<ExamDetailOriginClass>()
-                .HasOne(edoc=>edoc.OriginClass)
-                .WithMany(oc=>oc.examDetailOriginClasses)
-                .HasForeignKey(fk=>fk.OriginClassId);
+                .HasOne(edoc => edoc.OriginClass)
+                .WithMany(oc => oc.examDetailOriginClasses)
+                .HasForeignKey(fk => fk.OriginClassId);
 
         // ExamDetail n-------------->n student
-        builder.Entity<ExamStudent>().HasKey(k=> new {k.ExamDetailId,k.StudentId});
+        builder.Entity<ExamStudent>().HasKey(k => new { k.ExamDetailId, k.StudentId });
         builder.Entity<ExamStudent>()
-                .HasOne(es=>es.ExamDetail)
-                .WithMany(ed=>ed.ExamStudents)
-                .HasForeignKey(fk=>fk.ExamDetailId);
+                .HasOne(es => es.ExamDetail)
+                .WithMany(ed => ed.ExamStudents)
+                .HasForeignKey(fk => fk.ExamDetailId);
 
         builder.Entity<ExamStudent>()
-                .HasOne(es=>es.Student)
-                .WithMany(s=>s.ExamStudents)
-                .HasForeignKey(fk=>fk.StudentId);
+                .HasOne(es => es.Student)
+                .WithMany(s => s.ExamStudents)
+                .HasForeignKey(fk => fk.StudentId);
         // teacher 1 ---------------------> n ExamStudent
         builder.Entity<ExamStudent>()
-                .HasOne(es=>es.Teacher)
-                .WithMany(t=>t.ExamStudents)
-                .HasForeignKey(fk=>fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                .HasOne(es => es.Teacher)
+                .WithMany(t => t.ExamStudents)
+                .HasForeignKey(fk => fk.TeacherId).OnDelete(DeleteBehavior.Restrict);
         // teacher 1 ----------------> n subject
         builder.Entity<Subject>()
-                .HasOne(s=>s.Teacher)
-                .WithMany(t=>t.Subjects)
-                .HasForeignKey(fk=>fk.TeacherId);
+                .HasOne(s => s.Teacher)
+                .WithMany(t => t.Subjects)
+                .HasForeignKey(fk => fk.TeacherId);
 
         // user 1------------------->n otp
-        
+
         builder.Entity<OTP>()
-                .HasOne(o=>o.ApplicationUser)
-                .WithMany(u=>u.OTPs)
-                .HasForeignKey(fk=>fk.Id);
+                .HasOne(o => o.ApplicationUser)
+                .WithMany(u => u.OTPs)
+                .HasForeignKey(fk => fk.Id);
 
         base.OnModelCreating(builder);
     }
