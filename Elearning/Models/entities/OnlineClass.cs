@@ -34,12 +34,12 @@ public class OnlineClass
 
 
     public Guid SubjectOriginClassId { get; set; }
-    public SubjectOriginClass SubjectOriginClass { get; set; } = new SubjectOriginClass();
+    public SubjectOriginClass SubjectOriginClass { get; set; } = null!;
 
 
     public Guid TeacherId { get; set; }
 
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 
 
     public ICollection<ClassDay> ClassDays { get; set; } = new List<ClassDay>();

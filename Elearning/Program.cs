@@ -2,14 +2,28 @@ using Microsoft.AspNetCore.Identity;
 using ElearningApplication.Data;
 using Microsoft.EntityFrameworkCore;
 using ElearningApplication.Models.Entities;
+using ElearningApplication.Extensions;
+using ElearningApplication.Models.Error;
+using System.Reflection;
+using ElearningApplication.Services;
+using ElearningApplication.Interfaces.Services;
+using ElearningApplication.Models.Email;
+using ElearningApplication.Interfaces.Email;
+using ElearningApplication.Interfaces.Unit;
+using ElearningApplication.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<ELearningDbContext>(options=>
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(option =>
+            {
+                option.SuppressModelStateInvalidFilter = true;
+            });
+
+builder.Services.AddDbContext<ELearningDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser,ApplicationRole>()
                 .AddEntityFrameworkStores<ELearningDbContext>();
 
 
@@ -30,14 +44,57 @@ builder.Services.Configure<IdentityOptions>(options =>
 
     // User settings.
     options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = false;
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._";
+
+    options.User.RequireUniqueEmail = true;
 });
+
+// jwt config
+builder.Services.AddJwtTokenAuthentication(builder.Configuration);
+
+//Auto mapper
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+
+builder.Services.AddScoped<IAccountService,AccountService>();
+builder.Services.AddScoped<IRoleService,RoleService>();
+builder.Services.AddScoped<ITokenService,TokenService>();
+
+//config email
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
+                            .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender,MailSender>();
+
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 var app = builder.Build();
 
 app.Logger.LogInformation("Api is creating...................");
 
+
+// app.Logger.LogInformation("create seed data...................");
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     var services = scope.ServiceProvider;
+
+//     SeedData.Initialize(services);
+// }
+// app.Logger.LogInformation("create seed data completed...................");
+
+// global error catching.
+app.ConfigureExceptionHandler();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+app.MapControllers();
 
 
 app.Logger.LogInformation("Launching Application.....");

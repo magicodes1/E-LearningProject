@@ -7,12 +7,15 @@ public class ApplicationUser : IdentityUser
 {
     [StringLength(150)]
     public string Avatar { get; set; } = string.Empty;
+    
+    
+    public Guid? StudentId { get; set; }
+    public Student Student { get; set; } = null!;
 
-    public Guid StudentId { get; set; }
-    public Student Student { get; set; } = new Student();
-
-    public Guid TeacherId { get; set; }
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Guid? TeacherId { get; set; }
+    public Teacher Teacher { get; set; } = null!;
 
     public ICollection<OTP> OTPs { get; set; } = new List<OTP>();
+
+   public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
 }

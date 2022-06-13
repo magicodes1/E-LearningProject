@@ -19,7 +19,7 @@ public class Teacher
 
 
 
-    public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
+    public ApplicationUser ApplicationUser { get; set; } = null!;
 
     public ICollection<Message> Messages { get; set; } = new List<Message>();
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
@@ -28,7 +28,7 @@ public class Teacher
 
 
 
-    public OriginClass OriginClass { get; set; } = new OriginClass();
+    public OriginClass OriginClass { get; set; } = null!;
 
     public ICollection<ExamStudent> ExamStudents { get; set; } = new List<ExamStudent>();
 

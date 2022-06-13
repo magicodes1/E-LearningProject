@@ -15,13 +15,13 @@ public class Answer
     public DateTime ReleaseDate { get; set; }
 
     public Guid QuestionId { get; set; }
-    public Question Question { get; set; } = new Question();
+    public Question Question { get; set; } = null!;
 
-    public Guid TeacherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 
-    public Guid StudentId { get; set; }
+    public Guid? StudentId { get; set; }
 
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
 }

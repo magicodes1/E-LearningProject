@@ -17,14 +17,14 @@ public class Question
 
     public Guid OnlineClassId { get; set; }
 
-    public OnlineClass OnlineClass { get; set; } = new OnlineClass();
+    public OnlineClass OnlineClass { get; set; } = null!;
 
 
     public Guid StudentId { get; set; }
 
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
 
 
-    public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    public ICollection<Answer> Answers { get; set; } = null!;
 
 }

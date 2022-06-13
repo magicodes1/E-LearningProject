@@ -15,16 +15,16 @@ public class Message
 
     public Guid OnlineClassId { get; set; }
 
-    public OnlineClass OnlineClass { get; set; } = new OnlineClass();
+    public OnlineClass OnlineClass { get; set; } = null!;
 
 
-    public Guid StudentId { get; set; }
+    public Guid? StudentId { get; set; }
 
-    public Student Student { get; set; } = new Student();
+    public Student Student { get; set; } = null!;
     
 
-    public Guid TeacherId { get; set; }
+    public Guid? TeacherId { get; set; }
 
-    public Teacher Teacher { get; set; } = new Teacher();
+    public Teacher Teacher { get; set; } = null!;
 
 }

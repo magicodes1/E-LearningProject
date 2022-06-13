@@ -15,7 +15,7 @@ public class Term
     public int TermYear { get; set; }
 
     public Guid CourseId { get; set; }
-    public Course Course { get; set; } = new Course();
+    public Course Course { get; set; } = null!;
 
 
     public ICollection<TermSubject> TermSubjects { get; set; } = new List<TermSubject>();

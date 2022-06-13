@@ -17,7 +17,7 @@ public class ClassDay
 
 
     public Guid OnlineClassId { get; set; }
-    public OnlineClass onlineClass { get; set; } = new OnlineClass();
+    public OnlineClass onlineClass { get; set; } = null!;
 
     public ICollection<StudentClassDay> StudentClassDays { get; set; } = new List<StudentClassDay>();
 }

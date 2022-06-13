@@ -18,18 +18,18 @@ public class Student
 
 
     public Guid GradeId { get; set; }
-    public Grade Grade { get; set; } = new Grade();
+    public Grade Grade { get; set; } = null!;
 
     public Guid CourseId { get; set; }
-    public Course Course { get; set; } = new Course();
+    public Course Course { get; set; } = null!;
 
     public Guid OriginClassId { get; set; }
 
-    public OriginClass originClass { get; set; } = new OriginClass();
+    public OriginClass originClass { get; set; } = null!;
 
 
 
-    public ApplicationUser ApplicationUser { get; set; } = new ApplicationUser();
+    public ApplicationUser ApplicationUser { get; set; } = null!;
 
      public ICollection<StudentClassDay> StudentClassDays { get; set; } = new List<StudentClassDay>();
 

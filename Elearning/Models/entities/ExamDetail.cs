@@ -28,13 +28,13 @@ public class ExamDetail
 
     public Guid ExamId { get; set; }
 
-    public Exam Exam { get; set; } = new Exam();
+    public Exam Exam { get; set; } = null!;
 
     public Guid SubjectId { get; set; }
-    public Subject Subject { get; set; } = new Subject();
+    public Subject Subject { get; set; } = null!;
 
     public Guid ExamTypeId { get; set; }
-    public ExamType ExamType { get; set; } = new ExamType();
+    public ExamType ExamType { get; set; } = null!;
 
 
     public ICollection<ExamDetailOriginClass> examDetailOriginClasses { get; set; } = new List<ExamDetailOriginClass>();
